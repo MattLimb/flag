@@ -1,4 +1,5 @@
 use clap::{App, Arg};
+use colored_truecolor::control::set_override;
 
 mod flags;
 
@@ -23,6 +24,7 @@ fn list() {
     println!(" transgender    Show the transgender flag.\n");
 }
 fn main() {
+    set_override(true);
     let cmd_args = App::new("Terminal Flags")
                 .version("1.0.1")
                 .author("Matthew Limb <matt.limb17@gmail.com>")
