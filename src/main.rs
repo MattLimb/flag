@@ -1,31 +1,46 @@
 use clap::{App, Arg};
+use std::io;
+use std::fs::{self, DirEntry};
+use std::path::Path;
+
 
 mod flags;
+mod flag_builder;
 
 fn list() {
-    println!("\n Flag Value     Flag Description");
-    println!(" -------------------------------------------------");
-    println!(" lgbtq          Show the six colour lgbtq flag.");
-    println!("                Show the six colour lgbtq flag.");
-    println!(" agender        Show the agender flag.");
-    println!(" aromantic      Show the aromantic flag.");
-    println!(" asexual        Show the asexual flag.");
-    println!(" bisexual       Show the bisexual flag.");
-    println!(" demisexual     Show the demisexual flag.");
-    println!(" genderfluid    Show the genderfluid flag.");
-    println!(" genderqueer    Show the genderqueer flag.");
-    println!(" intersex       Show the intersex flag.");
-    println!(" lesbian        Show the traditional lesbian flag.");
-    println!(" lesbian-comm   Show the lesbian community flag.");
-    println!(" non-binary     Show the non-binary flag.");
-    println!(" pansexual      Show the panexual flag.");
-    println!(" polysexual     Show the polysexual flag.");
-    println!(" transgender    Show the transgender flag.\n");
+    let mut flags: Vec<String> = Vec::new();
+    let mut max_len = 10;
+
+    for entry in fs::read_dir(Path::new("flags.d/")).unwrap() {
+        match entry {
+            Ok(e) => {
+                let mut filename = e.file_name().to_str().unwrap().to_string();
+
+                filename = filename[0..filename.find('.').unwrap()].to_string();
+
+                if max_len < filename.len() {
+                    max_len = filename.len();
+                }
+
+                flags.push(filename);
+            },
+            Err(_) => println!("Error with file")
+        }
+    }
+
+    println!("\n Flag Value{}Flag Description", flag_builder::get_row((max_len-8) as i64));
+    println!(" --------------------------------------------------");
+    for flag in flags {
+        println!(" {}{}Show the {} flag.", &flag, flag_builder::get_row(((max_len-&flag.len())+2) as i64), &flag);
+    }
+
+    println!(" demisexual{}[Built-In] Show the demisexual flag.", flag_builder::get_row(((max_len-10)+2) as i64));
+    println!(" intersex{}[Built-In] Show the intersex flag.", flag_builder::get_row(((max_len-8)+2) as i64));
 }
 fn main() {
     let cmd_args = App::new("Terminal Flags")
-                .version("1.0.1")
-                .author("Matthew Limb <matt.limb17@gmail.com>")
+                .version("2.0.0")
+                .author("Matt Limb <matt.limb17@gmail.com>")
                 .about("Print coloured flags in the terminal.")
                 .arg(Arg::with_name("FLAG")
                     .value_name("FLAG")
@@ -34,23 +49,19 @@ fn main() {
                 )
             .get_matches();
             
-    match cmd_args.value_of("FLAG").unwrap_or("lgbtq") {
-        "lgbtq" => println!("{}", flags::lgbtq()),
-        "agender" => println!("{}", flags::agender()),
-        "aromantic" => println!("{}", flags::aromantic()),
-        "asexual" => println!("{}", flags::asexual()),
-        "bisexual" => println!("{}", flags::bi()),
-        "demisexual" => println!("{}", flags::demi()),
-        "genderfluid" => println!("{}", flags::genderfluid()),
-        "genderqueer" => println!("{}", flags::genderqueer()),
-        "intersex" => println!("{}", flags::intersex()),
-        "lesbian" => println!("{}", flags::lesbian()),
-        "lesbian-comm" => println!("{}", flags::lesbian_comm()),
-        "non-binary" => println!("{}", flags::non_binary()),
-        "pansexual" => println!("{}", flags::pan()),
-        "polysexual" => println!("{}", flags::polysexual()),
-        "transgender" => println!("{}", flags::trans()),
-        "list" => list(),
-        other => println!("No flag by the name: {}. Please choose a valid flag.", other),
+    let flag_config = flag_builder::find_config(&cmd_args.value_of("FLAG").unwrap_or("lgbtq"));
+                
+    match flag_config.len() {
+        0 => { 
+            match cmd_args.value_of("FLAG").unwrap_or("lgbtq") {
+                "demisexual" => println!("{}", flags::demi()),
+                "intersex" => println!("{}", flags::intersex()),
+                "list" => list(),
+                other => println!("No flag by the name: {}. Please choose a valid flag.", other),
+            };
+        },
+        _ => flag_builder::build_flag(flag_config),
     }
+
+    
 }
