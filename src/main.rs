@@ -1,6 +1,5 @@
 use clap::{App, Arg};
-use std::io;
-use std::fs::{self, DirEntry};
+use std::fs::{self};
 use std::path::Path;
 
 

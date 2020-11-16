@@ -6,8 +6,8 @@ use std::fs::File;
 use std::io::prelude::*;
 
 pub fn find_config(command: &str) -> Vec<Yaml> {
-    let mut empty_vector: Vec<Yaml> = Vec::new();
-    let mut flag_file = File::open(format!("flags.d/{}.yaml", &command));
+    let empty_vector: Vec<Yaml> = Vec::new();
+    let flag_file = File::open(format!("flags.d/{}.yaml", &command));
     
     match flag_file {
         Ok(mut f) => {
@@ -25,7 +25,7 @@ pub fn build_flag(flag_docs: Vec<Yaml>) {
 
     match flag_config["style"].as_str().unwrap() {
         "rows" => { 
-            println!("\n{}", rows(flag_config["colours"].as_vec().unwrap(),
+            println!("{}", rows(flag_config["colours"].as_vec().unwrap(),
                 flag_config["width"].as_i64().unwrap_or(70),
                 flag_config["height"].as_i64().unwrap_or(18)));
                 
