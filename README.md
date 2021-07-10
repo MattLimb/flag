@@ -26,8 +26,7 @@ Supported replacements for `<flag_name>` is:
 | genderfluid  | Show the genderfluid flag         |
 | genderqueer  | Show the genderqueer flag         |
 | intersex     | Show the intersex flag            |
-| lesbian      | Show the traditional lesbian flag |
-| lesbian-comm | Show the lesbian community flag   |
+| lesbian      | Show the lesbian flag             |
 | non-binary   | Show the non-binary flag          |
 | pansexual    | Show the pansexual flag           |
 | polysexual   | Show the polysexual flag          |

@@ -198,20 +198,6 @@ pub fn intersex() -> String {
 pub fn lesbian() -> String {
     let mut flag: String = "\n".to_string();
     
-    let cols: Vec<&str> = vec!["A60061", "B95594", "D162A8", "E5ADD1", "C64D53", "8C1801"];   
-    
-    for col in cols {
-        for _ in 0..3 {
-            flag = format!("{} {}\n", flag, row(75).on_hex_color(u64::from_str_radix(col, 16).unwrap()));
-        }
-    }
-
-    return flag
-}
-
-pub fn lesbian_comm() -> String {
-    let mut flag: String = "\n".to_string();
-    
     let cols: Vec<&str> = vec!["D62900", "FF9B55", "FFFFFF", "D461A6", "A50062"];   
     
     for col in cols {
