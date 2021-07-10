@@ -6,7 +6,6 @@ fn list() {
     println!("\n Flag Value     Flag Description");
     println!(" -------------------------------------------------");
     println!(" lgbtq          Show the six colour lgbtq flag.");
-    println!("                Show the six colour lgbtq flag.");
     println!(" agender        Show the agender flag.");
     println!(" aromantic      Show the aromantic flag.");
     println!(" asexual        Show the asexual flag.");
