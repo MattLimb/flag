@@ -15,8 +15,7 @@ fn list() {
     println!(" genderfluid    Show the genderfluid flag.");
     println!(" genderqueer    Show the genderqueer flag.");
     println!(" intersex       Show the intersex flag.");
-    println!(" lesbian        Show the traditional lesbian flag.");
-    println!(" lesbian-comm   Show the lesbian community flag.");
+    println!(" lesbian        Show the lesbian community flag.");
     println!(" non-binary     Show the non-binary flag.");
     println!(" pansexual      Show the panexual flag.");
     println!(" polysexual     Show the polysexual flag.");
@@ -45,7 +44,6 @@ fn main() {
         "genderqueer" => println!("{}", flags::genderqueer()),
         "intersex" => println!("{}", flags::intersex()),
         "lesbian" => println!("{}", flags::lesbian()),
-        "lesbian-comm" => println!("{}", flags::lesbian_comm()),
         "non-binary" => println!("{}", flags::non_binary()),
         "pansexual" => println!("{}", flags::pan()),
         "polysexual" => println!("{}", flags::polysexual()),
